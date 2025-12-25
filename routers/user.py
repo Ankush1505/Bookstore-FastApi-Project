@@ -1,18 +1,18 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 import models, schemas, database
-import utils  # <--- importing the hashing tool
+import utils 
 
 router = APIRouter(
     prefix="/users",
     tags=["Users"]
 )
 
-# --- CREATE USER (SIGN UP) ---
+# Create user / Signup section.
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     
-    # 1. Hash the password (turn "password123" into secret code)
+    # convert simple password to jumbled words.
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
     
@@ -26,7 +26,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     
     return new_user
 
-# --- GET USER (Optional, for testing) ---
+# Get User ( for testing)
 @router.get("/{id}", response_model=schemas.UserOut)
 def get_user(id: int, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
