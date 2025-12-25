@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, EmailStr
 from datetime import datetime
 from typing import Optional
 
-# 1. Base Schema: Shared properties
+# Base Schema: Shared properties
 class BookBase(BaseModel):
     title: str = Field(..., min_length=5, description="Title of the book")
     content: str = Field(..., min_length=5, description="Description of the book")
@@ -11,7 +11,7 @@ class BookBase(BaseModel):
     # Validation: Inventory cannot be negative
     inventory: int = Field(default=0, ge=0, description="Stock count")
 
-# 2. Create Schema: Used for POST requests
+# Create Schema: Used for POST requests
 class BookCreate(BookBase):
     pass 
 
@@ -27,7 +27,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
 
-# 2. User Out (The Receipt we send back - NO PASSWORD)
+ # User Out (The Receipt we send back)
 class UserOut(BaseModel):
     id: int
     email: EmailStr
