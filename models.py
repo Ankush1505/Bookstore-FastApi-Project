@@ -10,7 +10,6 @@ class Book(Base):
     content = Column(String, nullable=False)
     published = Column(Boolean, server_default='TRUE')
     price = Column(Float, nullable=False, server_default='0.0')
-    # Integer is used for counting whole items
     inventory = Column(Integer, nullable=False, server_default='0')
 
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
