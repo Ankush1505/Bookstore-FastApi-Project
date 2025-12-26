@@ -1,6 +1,6 @@
 # 📚 FastAPI Bookstore API
 
-This is a backend API built to manage an online bookstore. I built this project to move beyond basic Python scripts and master professional backend architecture using **FastAPI**, **PostgreSQL**, and **Docker/Render**.
+This is a backend API built to manage an online bookstore. I built this project to move beyond basic Python scripts and master professional backend architecture using **FastAPI**, **PostgreSQL**, and **Render**.
 
 🚀 **Live Demo:** Click here to view the Swagger UI ->
 (https://bookstore-fastapi-ankush.onrender.com/docs)
