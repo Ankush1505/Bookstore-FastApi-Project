@@ -8,14 +8,13 @@ class BookBase(BaseModel):
     content: str = Field(..., min_length=5, description="Description of the book")
     published: bool = True
     price: float = Field(default=0.0, ge=0, description="Price in dollars")
-    # Validation: Inventory cannot be negative
     inventory: int = Field(default=0, ge=0, description="Stock count")
 
 # Create Schema: Used for POST requests
 class BookCreate(BookBase):
     pass 
 
-# 3. Response Schema: Used for GET/PUT responses
+
 class Book(BookBase):
     id: int
     created_at: datetime
@@ -52,4 +51,4 @@ class Book_with_votes(BaseModel):
     votes : int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
