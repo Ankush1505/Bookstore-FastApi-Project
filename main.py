@@ -4,7 +4,7 @@ from database import engine
 from routers import books, user, auth, votes 
 from fastapi.middleware.cors import CORSMiddleware
 
-# Created Database Table 
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -21,7 +21,7 @@ app.add_middleware(
 
 
 
-# Connect the Router to the Main.
+
 app.include_router(books.router)
 app.include_router(user.router)
 app.include_router(auth.router)

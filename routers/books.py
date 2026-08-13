@@ -4,7 +4,7 @@ from sqlalchemy import func
 from typing import List
 import models, schemas, database 
 
-# Created Router
+
 
 router = APIRouter(
     prefix="/books",      

@@ -11,7 +11,6 @@ class Book(Base):
     published = Column(Boolean, server_default='TRUE')
     price = Column(Float, nullable=False, server_default='0.0')
     inventory = Column(Integer, nullable=False, server_default='0')
-
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
 class User(Base):
@@ -25,5 +24,5 @@ class User(Base):
 class Vote(Base):
     __tablename__ = "votes"
 
-    user_id = Column(Integer, ForeignKey("users.id"), primary_key=True, nullable=False)
-    book_id = Column(Integer, ForeignKey("books.id"), primary_key=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    book_id = Column(Integer, ForeignKey("books.id", ondelete="CASCADE"), primary_key=True, nullable=False)

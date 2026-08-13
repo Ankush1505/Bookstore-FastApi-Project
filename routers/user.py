@@ -16,10 +16,10 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
     
-    # 2. Create the user model
+    
     new_user = models.User(**user.dict())
     
-    # 3. Add to Database
+    
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
