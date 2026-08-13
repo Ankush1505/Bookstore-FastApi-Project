@@ -6,6 +6,8 @@ from typing import Optional
 class BookBase(BaseModel):
     title: str = Field(..., min_length=5, description="Title of the book")
     content: str = Field(..., min_length=5, description="Description of the book")
+    # Added author field to validate incoming requests and format outgoing responses
+    author: str = Field(..., description="Author of the book")
     published: bool = True
     price: float = Field(default=0.0, ge=0, description="Price in dollars")
     inventory: int = Field(default=0, ge=0, description="Stock count")

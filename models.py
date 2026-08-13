@@ -8,6 +8,9 @@ class Book(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
+    # Adding the 'author' column to store the name of the book's author
+    # We use String to hold text, and nullable=False means it's required
+    author = Column(String, nullable=False, server_default='Unknown Author')
     published = Column(Boolean, server_default='TRUE')
     price = Column(Float, nullable=False, server_default='0.0')
     inventory = Column(Integer, nullable=False, server_default='0')

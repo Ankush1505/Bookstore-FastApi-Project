@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from typing import List
+from typing import List, Optional
 import models, schemas, database 
 
 
@@ -13,13 +13,26 @@ router = APIRouter(
 
 # Get all Book Section
 @router.get("/", response_model=List[schemas.Book_with_votes])
-def get_books(db: Session = Depends(database.get_db)):
-    result = (
-        db.query(models.Book, func.count(models.Vote.book_id).label("Votes"))
+def get_books(db: Session = Depends(database.get_db), author: Optional[str] = None): # Added optional author query parameter
+    # Store the query first, joining the Book and Vote models and grouping them by book id
+    query = (
+        # Select the Book model and a count of votes labeled as "Votes"
+        db.query(models.Book, func.count(models.Vote.book_id).label("votes"))
+        # Perform an outer join on the Vote model using the book id
         .join(models.Vote, models.Vote.book_id == models.Book.id, isouter=True)
+        # Group the results by the book id to ensure accurate vote counts
         .group_by(models.Book.id)
-        .all()
-        )
+    )
+    
+    # Check if the optional author parameter is provided (not None)
+    if author:
+        # Conditionally add a filter to the query using .contains() for partial matches
+        query = query.filter(models.Book.author.contains(author))
+        
+    # Execute the fully constructed query using .all() at the very end
+    result = query.all()
+    
+    # Return the list of matching books with their vote counts
     return result
 
 # Create a Book

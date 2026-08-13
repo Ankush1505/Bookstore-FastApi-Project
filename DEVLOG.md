@@ -25,3 +25,12 @@
    - Updated `Vote` model in `models.py` to include `ondelete="CASCADE"` for both `user_id` and `book_id` foreign keys, ensuring votes are automatically removed when a related user or book is deleted.
 4. **Code Cleanup:**
    - Removed redundant comments across `main.py`, `oauth2.py`, `routers/books.py`, and `routers/user.py`.
+5. **Get Books API Update:**
+   - Modified `get_books` in `routers/books.py` to accept an optional `author` query parameter.
+   - Built the query conditionally: if `author` is provided, it filters books using SQLAlchemy's `.filter().contains()`.
+   - Delayed executing the query with `.all()` until the very end.
+   - Added descriptive comments for every line of code inside the function to explain the logic.
+6. **Pydantic V2 Migration:**
+   - Updated `schemas.py` by replacing `orm_mode = True` with `from_attributes = True` inside the `Book_with_votes` config to ensure compatibility with Pydantic V2.
+7. **Endpoint Testing:**
+   - Successfully tested both the `Create Book` (POST) and `Get Books` (GET) endpoints (including the new author filtering capabilities) to ensure proper database operations and correct response models.
