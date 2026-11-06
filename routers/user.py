@@ -20,6 +20,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     new_user = models.User(**user.dict())
     
     
+    if db.query(models.User).filter(models.User.email == user.email).first():
+        raise HTTPException(status_code=409, detail="Email already registered")
+    
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

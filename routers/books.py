@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional
-import models, schemas, database 
+import models, schemas, database, oauth2 
 
 
 
@@ -37,7 +37,7 @@ def get_books(db: Session = Depends(database.get_db), author: Optional[str] = No
 
 # Create a Book
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Book)
-def create_book(book: schemas.BookCreate, db: Session = Depends(database.get_db)):
+def create_book(book: schemas.BookCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(oauth2.get_current_user)):
     new_book = models.Book(**book.dict())
     db.add(new_book)
     db.commit()
@@ -57,7 +57,7 @@ def get_book(id: int, db: Session = Depends(database.get_db)):
 
 # Delete Book by Id
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_book(id: int, db: Session = Depends(database.get_db)):
+def delete_book(id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(oauth2.get_current_user)):
     book_query = db.query(models.Book).filter(models.Book.id == id)
 
     if book_query.first() == None:
@@ -69,7 +69,7 @@ def delete_book(id: int, db: Session = Depends(database.get_db)):
 
 # Update the book by id
 @router.put("/{id}", response_model=schemas.Book)
-def update_book(id: int, updated_book: schemas.BookCreate, db: Session = Depends(database.get_db)):
+def update_book(id: int, updated_book: schemas.BookCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(oauth2.get_current_user)):
     book_query = db.query(models.Book).filter(models.Book.id == id)
     book = book_query.first()
 
