@@ -2,8 +2,8 @@
 
 This is a backend API built to manage an online bookstore. I built this project to move beyond basic Python scripts and master professional backend architecture using **FastAPI**, **PostgreSQL**, and **Render**.
 
-🚀 **Live Demo:** Click here to view the Swagger UI ->
-(https://bookstore-fastapi-ankush.onrender.com/docs)
+🚀 **Live Demo:** Click here to view the Swagger UI ->  
+[https://bookstore-fastapi-ankush.onrender.com/docs](https://bookstore-fastapi-ankush.onrender.com/docs)  
 *(Note: Hosted on a free Render instance. Please allow 30-50 seconds for the server to wake up if it is sleeping.)*
 
 ----------------
